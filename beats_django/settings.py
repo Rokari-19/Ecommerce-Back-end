@@ -29,6 +29,13 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+STRIPE_SECRET_KEY = "sk_test_51P3nTd2NBH2pEt2KR3grVqnnpIs7RSICKmZb0owXBHUYPb9HwZzWszqBdUXSOIaS2OhssbMo3Efj1k67Lr94qNkH00L8h1mn0W"
+# Ideally, these values should be stored as environment variables, and loaded like so:
+
+# PAYSTACK_PUBLIC_KEY="pk_test_151b31813885bc0a256e2bcd658517c15fcb1993"
+# PAYSTACK_SECRET_KEY="sk_test_a0d14af8f81f9c1aca44d9b9a93b62e5c0d61fd6"
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,8 +49,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'djoser',
+    
     # custom apps
     'product',
+    'order',
 ]
 
 CORS_ALLOWED_ORIGINS = [

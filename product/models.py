@@ -4,11 +4,11 @@ from io import BytesIO
 from PIL import Image
 
 # Create your models here.
-
-
+# category models
 class Category(models.Model):
     name = models.CharField (max_length = 255)
     slug = models.SlugField()
+    description = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ('name',)
@@ -16,11 +16,17 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
+    # function to return the slug of a category (url)
     def get_absolute_url(self):
         return f'/{self.slug}/'
-    
 
+
+# key feature model for creating key features
+class KeyFeature(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Product(models.Model):
@@ -32,6 +38,9 @@ class Product(models.Model):
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
+    key_features = models.ManyToManyField(KeyFeature, related_name='products')
+    # passing an attribute called key_features into the 
+    
 
 
     class Meta:
@@ -73,3 +82,5 @@ class Product(models.Model):
 
 
     
+
+
