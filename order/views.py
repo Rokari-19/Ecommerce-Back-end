@@ -13,7 +13,7 @@ from rest_framework.response import Response
 
 # my api/models imports
 from .models import Order, OrderItem
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, MyOrderSerializer
 
 
 # Create your views here.
@@ -30,7 +30,7 @@ def checkout(request):
         try:
             charge = stripe.Charge.create(
                 amount=int(paid_amount * 100),
-                currency='usd',
+                currency='ngn',
                 description='Charge from beats.com',
                 source=serializer.validated_data['stripe_token']
             )
@@ -42,3 +42,13 @@ def checkout(request):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class OrdersList(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, format=None):
+        orders = Order.objects.filter(user=request.user)
+        serializer = MyOrderSerializer(orders, many=True)
+        return Response(serializer.data)
