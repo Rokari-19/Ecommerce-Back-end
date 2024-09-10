@@ -27,7 +27,7 @@ class ProductDetail(APIView):
         feature = product.key_features.all()
         features_serializer = KeyFeatureSerializer(feature, many=True)
         serializer = ProductSerializer(product)
-        print(feature)
+        # print(feature)
         return Response(serializer.data)
     
 
