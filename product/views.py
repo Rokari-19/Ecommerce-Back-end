@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from django.db.models import Q
 from .models import *
-# Create your views here.
+
 
 # class based view for the latedt products to display at the landing page
 class LatestProducts(APIView):
