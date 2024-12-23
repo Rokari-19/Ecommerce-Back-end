@@ -16,7 +16,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost'
+'127.0.0.1', 'localhost', '[::1]'
 ]
 
 
@@ -90,12 +90,12 @@ WSGI_APPLICATION = 'beats_django.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE', default="django.db.backends.sqlite3"),
-        'NAME': str(os.getenv('DB_NAME', default=BASE_DIR / 'db.sqlite3')),
-        'USER': os.getenv('DB_USER', default='user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', default='password'),
-        'HOST': os.getenv('DB_HOST', default='localhost'),
-        'PORT': os.getenv('DB_PORT', default='5432'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'danielfori',
+        'PASSWORD': 'bots1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 # fori, set the db credentials based on however you want it to be. 
