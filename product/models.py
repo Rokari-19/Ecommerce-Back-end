@@ -2,6 +2,7 @@ from django.core.files import File
 from django.db import models
 from io import BytesIO
 from PIL import Image
+import uuid, base64
 
 # Create your models here.
 # category models
@@ -30,6 +31,7 @@ class KeyFeature(models.Model):
 
 
 class Product(models.Model):
+    id = models.CharField(primary_key=True, max_length=12, editable=False, unique=True)
     category = models.ForeignKey(Category, related_name = 'products', on_delete = models.CASCADE)
     name = models.CharField(max_length = 255)
     slug = models.SlugField()
@@ -80,7 +82,14 @@ class Product(models.Model):
 
         return thumbnail
 
-
+    def save(self, *args, **kwargs):
+        if not self.id:
+            
+            hex_string = uuid.uuid4().hex
+            bytes_data = bytes.fromhex(hex_string)
+            data = base64.urlsafe_b64encode(bytes_data).decode('ascii')[:12]
+            self.id = data.replace("-", "")
+        return super().save(*args, **kwargs)
     
 
 

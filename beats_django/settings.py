@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'djoser',
+    'django_celery_results',
     
     # custom apps
     'product',
     'order',
+    'notifications',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -88,14 +90,24 @@ WSGI_APPLICATION = 'beats_django.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'danielfori',
+#         'PASSWORD': 'bots1234',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'danielfori',
-        'PASSWORD': 'bots1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': os.getenv('DB_ENGINE', default="django.db.backends.sqlite3"),
+        'NAME': str(os.getenv('DB_NAME', default=BASE_DIR / 'db.sqlite3')),
+        'USER': os.getenv('DB_USER', default='user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', default='password'),
+        'HOST': os.getenv('DB_HOST', default='localhost'),
+        'PORT': os.getenv('DB_PORT', default='5432'),
     }
 }
 # fori, set the db credentials based on however you want it to be. 
@@ -138,6 +150,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = '/media/'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = "Africa/Lagos"
 
 
 # Default primary key field type
