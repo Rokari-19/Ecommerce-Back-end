@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
-from .models import Notifications
 from django.dispatch import receiver
 from order.models import Order
+from product.models import Product
 from .tasks import create_notification
 
 
