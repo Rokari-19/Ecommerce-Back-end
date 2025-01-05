@@ -16,6 +16,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
+            'category',
             'get_absolute_url',
             'description',
             'price',
@@ -38,3 +39,16 @@ class CategorySerializer(serializers.ModelSerializer):
             'products',
             'description',
         )
+        
+        
+class CreateCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('name', 'description',)
+        
+    def create(self, validated_data):
+        category = Category.objects.create(
+            name=validated_data['name'],
+            description=validated_data['description']
+        )
+        return category
