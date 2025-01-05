@@ -3,6 +3,9 @@ from django.dispatch import receiver
 from order.models import Order
 from product.models import Product
 from .tasks import create_notification
+from django.contrib.auth import get_user_model
+
+user = get_user_model()
 
 
 @receiver(post_save, sender=Order)
@@ -20,4 +23,7 @@ def create_order_notification(sender, instance, created, **kwargs):
     elif instance.status == 'Cancelled':
         create_notification.delay(instance, 'Order Cancelled', 'Your order has been cancelled')
         
-
+@receiver(post_save, sender=user)
+def signup_notification(sender, instance, created, **kwargs):
+    if created:
+        create_notification.delay(instance, 'Account Created', 'Your account has been created successfully')

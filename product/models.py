@@ -3,25 +3,29 @@ from django.db import models
 from io import BytesIO
 from PIL import Image
 import uuid, base64
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 # category models
 class Category(models.Model):
     name = models.CharField (max_length = 255)
-    slug = models.SlugField()
+    slug = models.SlugField(editable=False)
     description = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ('name',)
-        verbose_name_plural = 'Categories '
+        verbose_name_plural = 'Categories'
 
     def __str__(self) -> str:
         return self.name
     # function to return the slug of a category (url)
     def get_absolute_url(self):
         return f'/{self.slug}/'
-
-
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
 # key feature model for creating key features
 class KeyFeature(models.Model):
     name = models.CharField(max_length=100)
@@ -31,7 +35,7 @@ class KeyFeature(models.Model):
 
 
 class Product(models.Model):
-    id = models.CharField(primary_key=True, max_length=12, editable=False, unique=True)
+    id = models.CharField(primary_key=True, max_length=12, editable=False, unique=True, null=False)
     category = models.ForeignKey(Category, related_name = 'products', on_delete = models.CASCADE)
     name = models.CharField(max_length = 255)
     slug = models.SlugField()
@@ -52,7 +56,8 @@ class Product(models.Model):
         return self.name
      
     def get_absolute_url(self):
-        return f'/{self.category.slug}/{self.slug}/'
+        cat_slug = slugify(self.category.name if self.category else 'no-organizer')
+        return f'/{cat_slug}/{self.slug}/'
     
 
     def get_image(self):
@@ -83,12 +88,13 @@ class Product(models.Model):
         return thumbnail
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            
+        if not self.id: 
             hex_string = uuid.uuid4().hex
             bytes_data = bytes.fromhex(hex_string)
             data = base64.urlsafe_b64encode(bytes_data).decode('ascii')[:12]
             self.id = data.replace("-", "")
+        if not self.slug:
+            self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
     
 
