@@ -44,7 +44,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
-    key_features = models.ManyToManyField(KeyFeature, related_name='products')
+    # key_features = models.ManyToManyField(KeyFeature, related_name='products')
     # passing an attribute called key_features into the 
     
 
