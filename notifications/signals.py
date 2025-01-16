@@ -23,8 +23,8 @@ def create_order_notification(sender, instance, created, **kwargs):
     elif instance.status == 'Cancelled':
         create_notification.delay(instance, 'Order Cancelled', 'Your order has been cancelled')
         
-@receiver(post_save, sender=user)
-def signup_notification(sender, instance, created, **kwargs):
-    id = instance.id
-    if created:
-        create_notification.delay(instance, 'Account Created', 'Your account has been created successfully')
+# @receiver(post_save, sender=user)
+# def signup_notification(sender, instance, created, **kwargs):
+#     id = instance.id
+#     if created:
+#         create_notification.delay(instance, 'Account Created', 'Your account has been created successfully')
