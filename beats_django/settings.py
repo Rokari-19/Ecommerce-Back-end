@@ -4,7 +4,9 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 load_dotenv()
+import dj_database_url
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -56,9 +58,9 @@ CORS_ALLOWED_ORIGINS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -90,25 +92,12 @@ WSGI_APPLICATION = 'beats_django.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'danielfori',
-#         'PASSWORD': 'bots1234',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DB_ENGINE', default="django.db.backends.sqlite3"),
-        'NAME': str(os.getenv('DB_NAME', default=BASE_DIR / 'db.sqlite3')),
-        'USER': os.getenv('DB_USER', default='user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', default='password'),
-        'HOST': os.getenv('DB_HOST', default='localhost'),
-        'PORT': os.getenv('DB_PORT', default='5432'),
-    }
+    'default' : dj_database_url.config(
+        default='postgresql://user:XfdsNtuLtNpOC7qXXhpoI12uJceSpX4I@dpg-cu5nmttsvqrc738abtug-a.oregon-postgres.render.com/postgres1_12dm',
+        conn_max_age=600
+    )
 }
 # fori, set the db credentials based on however you want it to be. 
 # i already set up the connection on my system so it should be good to go
@@ -155,7 +144,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+'''static logic'''
 STATIC_URL = '/static/'
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = '/media/'
 # celery settings
