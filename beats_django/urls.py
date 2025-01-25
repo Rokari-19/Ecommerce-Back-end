@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/v1/auth/', include('djoser.urls.authtoken')),
     path('api/v1/core/', include('product.urls')),
     path('api/v1/order/', include('order.urls')),
+    path('api/v1/vendors/', include('vendors.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -1,5 +1,6 @@
 from django.core.files import File
 from django.db import models
+from vendors.models import Vendor
 from io import BytesIO
 from PIL import Image
 import uuid, base64
@@ -44,6 +45,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name='products', blank=False, null=False)
     # key_features = models.ManyToManyField(KeyFeature, related_name='products')
     # passing an attribute called key_features into the 
     
