@@ -15,7 +15,7 @@ import dj_database_url
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
 '127.0.0.1', 'localhost', '[::1]'
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'product',
     'order',
     'notifications',
+    'vendors'
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -93,11 +94,18 @@ WSGI_APPLICATION = 'beats_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default' : dj_database_url.config(
+#         default='postgresql://user:XfdsNtuLtNpOC7qXXhpoI12uJceSpX4I@dpg-cu5nmttsvqrc738abtug-a.oregon-postgres.render.com/postgres1_12dm',
+#         conn_max_age=600
+#     )
+# }
+
 DATABASES = {
-    'default' : dj_database_url.config(
-        default='postgresql://user:XfdsNtuLtNpOC7qXXhpoI12uJceSpX4I@dpg-cu5nmttsvqrc738abtug-a.oregon-postgres.render.com/postgres1_12dm',
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 # fori, set the db credentials based on however you want it to be. 
 # i already set up the connection on my system so it should be good to go
