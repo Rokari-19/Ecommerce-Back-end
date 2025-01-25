@@ -15,7 +15,7 @@ import dj_database_url
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
 '127.0.0.1', 'localhost', '[::1]'
@@ -23,7 +23,7 @@ ALLOWED_HOSTS = [
 
 
 # Application definition
-STRIPE_SECRET_KEY = "sk_test_51P3nTd2NBH2pEt2KR3grVqnnpIs7RSICKmZb0owXBHUYPb9HwZzWszqBdUXSOIaS2OhssbMo3Efj1k67Lr94qNkH00L8h1mn0W"
+STRIPE_SECRET_KEY = "pk_test_51QkyVACQCYGpSyxCJm3P7kxsmaqLKofxYlbCxeGXnN2KiVZ18g1yc1dP467rm0GeNE64wYc3wKyUeOUp91x8lsJE00Ie0F77m3"
 # Ideally, these values should be stored as environment variables, and loaded like so:
 
 # PAYSTACK_PUBLIC_KEY="pk_test_151b31813885bc0a256e2bcd658517c15fcb1993"
