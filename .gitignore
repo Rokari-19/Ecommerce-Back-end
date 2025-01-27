@@ -3,3 +3,8 @@ beats_django/__pycache__/
 order/__pycache__/
 product/__pycache__/
 vendors/__pycache__/
+
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
