@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'vendors'
 ]
 
+# AUTH_USER_MODEL = []
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://localhost:5173"

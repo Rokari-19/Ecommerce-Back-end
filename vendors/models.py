@@ -3,7 +3,7 @@ from django.template.defaultfilters import slugify
 import uuid, base64
 
 # Create your models here.
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractBaseUser
 
 class Vendor(models.Model):
     class Meta:
@@ -31,3 +31,6 @@ class Vendor(models.Model):
         if not self.slug:
             self.slug = slugify(self.user.username)
         return super().save(*args, **kwargs)
+    
+class User(AbstractBaseUser):
+    pass
