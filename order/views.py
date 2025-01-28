@@ -73,6 +73,6 @@ class OrdersList(APIView):
 
     def get(self, request, format=None):
         orders = Order.objects.filter(user=request.user)
-        serializer = PaymentSerializer(orders, many=True)
+        serializer = MyPaymentSerializer(orders, many=True)
         return Response(serializer.data)
     

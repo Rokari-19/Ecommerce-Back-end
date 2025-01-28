@@ -43,7 +43,6 @@ class MyPaymentSerializer(serializers.ModelSerializer):
             "zipcode",
             "place",
             "phone",
-            "stripe_token",
             "items",
             "paid_amount",
             "status",
