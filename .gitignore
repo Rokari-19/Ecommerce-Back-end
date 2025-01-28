@@ -2,9 +2,13 @@ notifications/__pycache__/
 beats_django/__pycache__/
 order/__pycache__/
 product/__pycache__/
+<<<<<<< HEAD
 vendors/__pycache__/
 
 __pycache__/
 */__pycache__/
 *.py[cod]
 *$py.class
+=======
+vendors/__pycache__/
+>>>>>>> master
