@@ -23,7 +23,7 @@ ALLOWED_HOSTS = [
 
 
 # Application definition
-STRIPE_SECRET_KEY = "pk_test_51QkyVACQCYGpSyxCJm3P7kxsmaqLKofxYlbCxeGXnN2KiVZ18g1yc1dP467rm0GeNE64wYc3wKyUeOUp91x8lsJE00Ie0F77m3"
+STRIPE_SECRET_KEY = "sk_test_51QkyVACQCYGpSyxCDStYnZoH6KX2gy6M3XvI1WXkVCuayCGLvAK8xEhy9IEgyg27IpB5NC0awJsAi1o2u2bgtFy700sXJfE3Sb"
 # Ideally, these values should be stored as environment variables, and loaded like so:
 
 # PAYSTACK_PUBLIC_KEY="pk_test_151b31813885bc0a256e2bcd658517c15fcb1993"

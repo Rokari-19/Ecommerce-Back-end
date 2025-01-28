@@ -13,7 +13,7 @@ from rest_framework.response import Response
 
 # my api/models imports
 from .models import Order, OrderItem
-from .serializers import OrderSerializer, MyOrderSerializer, DeliveryOrderSerializer
+from .serializers import PaymentSerializer, MyPaymentSerializer, DeliveryOrderSerializer
 
 
 # Create your views here.
@@ -22,28 +22,35 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 @authentication_classes([authentication.TokenAuthentication])
 @permission_classes([permissions.IsAuthenticated])
 def checkout(request):
-    serializer = OrderSerializer(data=request.data)
+    serializer = PaymentSerializer(data=request.data)
 
     if serializer.is_valid():
         paid_amount = sum(item.get('quantity') * item.get('product').price for item in serializer.validated_data['items'])
 
         try:
-            charge = stripe.Charge.create(
+            charge = stripe.PaymentIntent.create(
                 amount=int(paid_amount * 100),
-                currency='ngn',
-                description='Charge from decena.com',
-                source=serializer.validated_data['stripe_token']
+                currency=request.data.get('currency'),
+                # description='Charge from decena.com',
+                # source=serializer.validated_data['stripe_token']
             )
+            stripe_payment_id = charge['client_secret']
+            serializer.save(user=request.user, paid_amount=paid_amount, stripe_payment_id=stripe_payment_id)
 
-            serializer.save(user=request.user, paid_amount=paid_amount)
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except Exception:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                    'clientSecret': charge['client_secret'],
+                    'payment': serializer.data,},
+                    status=status.HTTP_201_CREATED
+                    )
+        except stripe.error.StripeError as e:
+            return Response({'error': str(e)}, status=400)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    
+
+
+
+
     
 @api_view(['POST'])
 @authentication_classes([authentication.TokenAuthentication])
@@ -66,5 +73,6 @@ class OrdersList(APIView):
 
     def get(self, request, format=None):
         orders = Order.objects.filter(user=request.user)
-        serializer = MyOrderSerializer(orders, many=True)
+        serializer = PaymentSerializer(orders, many=True)
         return Response(serializer.data)
+    

@@ -4,6 +4,20 @@ from .models import Order, OrderItem
 
 from product.serializers import ProductSerializer
 
+# class PaymentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Order
+#         fields = [
+#             'id',
+#             'amount',
+#             'currency',
+#             'stripe_payment_id',
+#             'created_at',
+#             'email',
+            
+#             ]
+
+
 class MyOrderItemSerializer(serializers.ModelSerializer):    
     product = ProductSerializer()
 
@@ -15,7 +29,7 @@ class MyOrderItemSerializer(serializers.ModelSerializer):
             "quantity",
         )
 
-class MyOrderSerializer(serializers.ModelSerializer):
+class MyPaymentSerializer(serializers.ModelSerializer):
     items = MyOrderItemSerializer(many=True)
 
     class Meta:
@@ -44,7 +58,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "quantity",
         )
 
-class OrderSerializer(serializers.ModelSerializer):
+class PaymentSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
 
     class Meta:
@@ -56,9 +70,10 @@ class OrderSerializer(serializers.ModelSerializer):
             "email",
             "address",
             "zipcode",
+            "currency",
             "place",
             "phone",
-            "stripe_token",
+            "stripe_payment_id",
             "items",
             "method",
         )

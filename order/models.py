@@ -25,9 +25,10 @@ class Order(models.Model):
     zipcode = models.CharField(max_length=100)
     place = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
+    currency = models.CharField(max_length=3, default='eur')
     created_at = models.DateTimeField(auto_now_add=True)
     paid_amount = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
-    stripe_token = models.CharField(max_length=100, blank=True, null=True)
+    stripe_payment_id = models.CharField(max_length=100, blank=True, null=True)
     method = models.CharField(max_length=30, choices=PAYMENT_CHOICES, default='card')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
 
