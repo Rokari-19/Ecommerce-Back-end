@@ -23,7 +23,7 @@ ALLOWED_HOSTS = [
 
 
 # Application definition
-STRIPE_SECRET_KEY = "sk_test_51P3nTd2NBH2pEt2KR3grVqnnpIs7RSICKmZb0owXBHUYPb9HwZzWszqBdUXSOIaS2OhssbMo3Efj1k67Lr94qNkH00L8h1mn0W"
+STRIPE_SECRET_KEY = "sk_test_51QkyVACQCYGpSyxCDStYnZoH6KX2gy6M3XvI1WXkVCuayCGLvAK8xEhy9IEgyg27IpB5NC0awJsAi1o2u2bgtFy700sXJfE3Sb"
 # Ideally, these values should be stored as environment variables, and loaded like so:
 
 # PAYSTACK_PUBLIC_KEY="pk_test_151b31813885bc0a256e2bcd658517c15fcb1993"
@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'notifications',
     'vendors'
 ]
+
+# AUTH_USER_MODEL = []
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",

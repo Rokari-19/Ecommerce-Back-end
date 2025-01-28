@@ -10,7 +10,6 @@ class KeyFeatureSerializer(serializers.ModelSerializer):
         model = KeyFeature
         fields = ('id', 'name',) 
 class ProductSerializer(serializers.ModelSerializer):
-    key_features = KeyFeatureSerializer(many=True, read_only=True)
     class Meta:
         model = Product
         fields = (
@@ -22,7 +21,6 @@ class ProductSerializer(serializers.ModelSerializer):
             'price',
             'get_image',
             'get_thumbnail',
-            'key_features'
         )
 
 

@@ -4,6 +4,20 @@ from .models import Order, OrderItem
 
 from product.serializers import ProductSerializer
 
+# class PaymentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Order
+#         fields = [
+#             'id',
+#             'amount',
+#             'currency',
+#             'stripe_payment_id',
+#             'created_at',
+#             'email',
+            
+#             ]
+
+
 class MyOrderItemSerializer(serializers.ModelSerializer):    
     product = ProductSerializer()
 
@@ -15,7 +29,7 @@ class MyOrderItemSerializer(serializers.ModelSerializer):
             "quantity",
         )
 
-class MyOrderSerializer(serializers.ModelSerializer):
+class MyPaymentSerializer(serializers.ModelSerializer):
     items = MyOrderItemSerializer(many=True)
 
     class Meta:
@@ -29,9 +43,9 @@ class MyOrderSerializer(serializers.ModelSerializer):
             "zipcode",
             "place",
             "phone",
-            "stripe_token",
             "items",
-            "paid_amount"
+            "paid_amount",
+            "status",
         )
 
 class OrderItemSerializer(serializers.ModelSerializer):    
@@ -43,7 +57,37 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "quantity",
         )
 
-class OrderSerializer(serializers.ModelSerializer):
+class PaymentSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "address",
+            "zipcode",
+            "currency",
+            "place",
+            "phone",
+            "stripe_payment_id",
+            "items",
+            "method",
+        )
+    
+    def create(self, validated_data):
+        items_data = validated_data.pop('items')
+        order = Order.objects.create(**validated_data)
+
+        for item_data in items_data:
+            OrderItem.objects.create(order=order, **item_data)
+            
+        return order    
+    
+
+class DeliveryOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
 
     class Meta:
@@ -57,8 +101,8 @@ class OrderSerializer(serializers.ModelSerializer):
             "zipcode",
             "place",
             "phone",
-            "stripe_token",
             "items",
+            "method",
         )
     
     def create(self, validated_data):

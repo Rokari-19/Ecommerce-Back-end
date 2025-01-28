@@ -33,8 +33,6 @@ class ProductDetail(APIView):
         # updated logic for the product detail view to show the key features of a product
     def get(self, request, category_slug, product_slug, format=None):
         product = self.get_object(category_slug, product_slug)
-        feature = product.key_features.all()
-        features_serializer = KeyFeatureSerializer(feature, many=True)
         serializer = ProductSerializer(product)
         # print(feature)
         return Response(serializer.data, status.HTTP_200_OK)
