@@ -96,19 +96,19 @@ WSGI_APPLICATION = 'beats_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default' : dj_database_url.config(
-#         default='postgresql://user:XfdsNtuLtNpOC7qXXhpoI12uJceSpX4I@dpg-cu5nmttsvqrc738abtug-a.oregon-postgres.render.com/postgres1_12dm',
-#         conn_max_age=600
-#     )
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default' : dj_database_url.config(
+        default='postgresql://user:XfdsNtuLtNpOC7qXXhpoI12uJceSpX4I@dpg-cu5nmttsvqrc738abtug-a.oregon-postgres.render.com/postgres1_12dm',
+        conn_max_age=600
+    )
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 # fori, set the db credentials based on however you want it to be. 
 # i already set up the connection on my system so it should be good to go
 
