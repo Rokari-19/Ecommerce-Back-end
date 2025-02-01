@@ -55,7 +55,7 @@ INSTALLED_APPS = [
 # AUTH_USER_MODEL = []
 
 DJOSER = {
-    'LOGIN_FIELD': 'email'
+    # 'LOGIN_FIELD': 'email'
 }
 
 CORS_ALLOWED_ORIGINS = [

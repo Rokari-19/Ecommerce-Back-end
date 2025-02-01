@@ -15,6 +15,7 @@ class Vendor(models.Model):
     address = models.TextField(max_length=250)
     store_name = models.CharField(max_length=70, default=None)
     slug = models.SlugField(editable=False)
+    approved = models.BooleanField(default=False)
     
     def get_absolute_url(self):
         return f"{self.slug}"
