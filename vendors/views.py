@@ -25,9 +25,10 @@ class CreateVendorView(GenericAPIView):
             status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
-    
+
+
 class GetVendorListView(APIView):
     def get(self, request):
-        vendors = Vendor.objects.all()
-        serializer = VendorSerializer(vendors, many=True)
-        return Response(serializer.data, status.HTTP_200_OK)
+        approved_vendors = Vendor.objects.filter(approved=True)
+        serializer = VendorSerializer(approved_vendors, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
