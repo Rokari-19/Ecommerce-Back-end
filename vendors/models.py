@@ -13,7 +13,7 @@ class Vendor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vendors')
     phone = models.CharField(max_length=15)
     address = models.TextField(max_length=250)
-    store_name = models.CharField(max_length=70, default=None)
+    store_name = models.CharField(max_length=70, blank=False, null=False)
     slug = models.SlugField(editable=False)
     approved = models.BooleanField(default=False)
     
@@ -33,5 +33,3 @@ class Vendor(models.Model):
             self.slug = slugify(self.user.username)
         return super().save(*args, **kwargs)
     
-class User(AbstractBaseUser):
-    pass
