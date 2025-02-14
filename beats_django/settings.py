@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = [
-'127.0.0.1', 'localhost', '[::1]'
+'127.0.0.1', 'localhost', 'ecommerce-back-end-s6w0.onrender.com'
 ]
 
 
