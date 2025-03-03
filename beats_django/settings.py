@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'beats_django.wsgi.application'
 
 DATABASES = {
     'default' : dj_database_url.config(
-        default='postgresql://user:XfdsNtuLtNpOC7qXXhpoI12uJceSpX4I@dpg-cu5nmttsvqrc738abtug-a.oregon-postgres.render.com/postgres1_12dm',
+        default='postgresql://user:nfeIuqUGTnM3EnwVLtj9yYERH4lPsqaB@dpg-cv2o9uij1k6c739mu0l0-a.oregon-postgres.render.com/decena1',
         conn_max_age=600
     )
 }
