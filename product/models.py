@@ -8,6 +8,7 @@ from django.template.defaultfilters import slugify
 
 # Create your models here.
 # category models
+host_url = "https://ecommerce-back-end-s6w0.onrender.com"
 class Category(models.Model):
     name = models.CharField (max_length = 255)
     slug = models.SlugField(editable=False)
@@ -64,17 +65,17 @@ class Product(models.Model):
 
     def get_image(self):
         if self.image:
-            return 'http://127.0.0.1:8000' + self.image.url
+            return host_url + self.image.url
         return ''
     
     def get_thumbnail(self):
         if self.thumbnail:
-            return 'http://127.0.0.1:8000' + self.thumbnail.url
+            return host_url + self.thumbnail.url
         else:
             if self.image:
                 self.thumbnail = self.make_thumbnail(self.image)
                 self.save()
-                return 'http://127.0.0.1:8000' + self.thumbnail.url
+                return host_url + self.thumbnail.url
             else:
                 ''
 
